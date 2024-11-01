@@ -1,13 +1,13 @@
-import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { StyleSheet, Text, TouchableHighlight, View, FlatList, ScrollView, } from "react-native";
 import { Link } from "expo-router";
-import { FlatList, ScrollView } from "react-native";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function Index() {
   return (
-    <View>
+    <View  style={{
+      flex: 1,}}>
 
-      <View style={styles.headerBar}>
+    <View style={styles.headerBar}>
         <Text style={styles.headerButton}>Home</Text>
 
         <Link href="help" style={styles.headerButton}>Help</Link>
@@ -24,15 +24,14 @@ export default function Index() {
         <NavigationButton name="Create New Activity" link="newActivityForm"/>
 
         <NavigationButton name="Log Activity" link="newActivityForm"/>
-      </View>
+      </View> 
 
-      <View>
-
-        <Text style={styles.listHeader}>Activities</Text>
-
+      <View style={{
+      flex: 1,}}>
+        <Text style={{textAlign: "center"}}>Activity List</Text>
         <FlatList
           data = {ActivityList}
-          renderItem={({item}) => <NavigationButton name={item} link="newActivityForm"/>}
+          renderItem={({item}) => <NavigationButton link="newActivityForm" name={item} />}
         />
       </View>
       
@@ -81,11 +80,12 @@ const styles = StyleSheet.create({
 
   headerButton: {
     backgroundColor: "#a5c6fa",
-    flex: 1,
     textAlign: "center",
     margin: 5,
-    padding: 15,
+    padding: 5,
     borderRadius: 5,
+    height: 30,
+
   },
 
   calendar: {
