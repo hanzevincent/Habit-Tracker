@@ -5,20 +5,20 @@ import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 export default function Index() {
   return (
     <View  style={{
-      flex: 1,}}>
+      flex: 1,} /*Scrolling on FlatList doesn't work without this flex*/}>
 
     <View style={styles.headerBar}>
-        <Text style={styles.headerButton}>Home</Text>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Text style={styles.homeButton}>Home</Text>
+        </View>
 
-        <Link href="help" style={styles.headerButton}>Help</Link>
-        <Link href="settings" style={styles.headerButton}>Settings</Link>
+        <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end'}}>
+          <Link href="help" style={styles.headerButton}>Help</Link>
+          <Link href="settings" style={styles.headerButton}>Settings</Link>
+        </View>
       </View>
 
-      <View>
-        <Text style={styles.calendar}>
-          Calendar Placeholder
-        </Text>
-      </View>
+      <Calendar style={styles.calendar}/>
 
       <View>
         <NavigationButton name="Create New Activity" link="newActivityForm"/>
@@ -27,11 +27,11 @@ export default function Index() {
       </View> 
 
       <View style={{
-      flex: 1,}}>
+      flex: 1,} /*Scrolling on FlatList doesn't work without this flex*/}>
         <Text style={{textAlign: "center"}}>Activity List</Text>
         <FlatList
           data = {ActivityList}
-          renderItem={({item}) => <NavigationButton link="newActivityForm" name={item} />}
+          renderItem={({item}) => <ActivityButton link="newActivityForm" name={item} />}
         />
       </View>
       
@@ -46,7 +46,88 @@ const NavigationButton = props => {
   </TouchableHighlight>
   );}
 
-const ActivityList = [
+  const ActivityButton = props => {
+    return (
+    <View style={styles.button}>
+      <TouchableHighlight>
+        <Link href={props.link}>{props.name}</Link>
+      </TouchableHighlight>
+    </View>
+    );}
+
+    const CalendarEntry = props => {
+      return (
+        <View style={styles.calendarEntry}>{props.day}</View>
+      )
+    }
+
+    const Calendar = props => {
+      return (
+        
+        <View style={styles.calendar}>
+          {CalendarEntries.map(day => (
+          <CalendarEntry day={day}/>))}
+        </View>
+      )
+    }
+
+    const styles = StyleSheet.create({
+      button: {
+        textAlign: 'center',
+        padding: 15,
+        margin: 10,
+        borderRadius: 5,
+        backgroundColor: "#a5c6fa",
+      },
+    
+      headerBar: {
+        flexDirection: 'row',
+        margin: 5,
+      },
+    
+      headerButton: {
+        backgroundColor: "#a5c6fa",
+        textAlign: "center",
+        margin: 5,
+        padding: 5,
+        borderRadius: 5,
+        height: 30,
+      },
+
+      homeButton: {
+        backgroundColor: "#a5c6fa",
+        textAlign: "center",
+        margin: 5,
+        padding: 5,
+        borderRadius: 5,
+        height: 30,
+      },
+    
+      calendar: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: 'auto',
+        height: 250,
+
+
+      },
+    
+      calendarEntry: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        height: '25%',
+        width: '10%',
+        backgroundColor: "#d0d0d0",
+        borderColor: 'black'
+      },
+    
+      listHeader: {
+        width: 'auto',
+        textAlign: 'center',
+      },
+    });
+
+    const ActivityList = [
   "Read Book",
   "Exercise",
   "Homework",
@@ -64,42 +145,6 @@ const ActivityList = [
   "Wash Dishes",
 ];
 
-const styles = StyleSheet.create({
-  button: {
-    textAlign: 'center',
-    padding: 15,
-    margin: 10,
-    borderRadius: 5,
-    backgroundColor: "#a5c6fa",
-  },
-
-  headerBar: {
-    flexDirection: 'row',
-    margin: 5,
-  },
-
-  headerButton: {
-    backgroundColor: "#a5c6fa",
-    textAlign: "center",
-    margin: 5,
-    padding: 5,
-    borderRadius: 5,
-    height: 30,
-
-  },
-
-  calendar: {
-    width: 'auto',
-    height: 250,
-    padding: 25,
-    textAlign: "center",
-    backgroundColor: "#a5c6fa",
-    borderRadius: 5,
-    margin: 10,
-  },
-
-  listHeader: {
-    width: 'auto',
-    textAlign: 'center',
-  },
-});
+const CalendarEntries = [
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
+];
