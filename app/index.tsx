@@ -4,72 +4,79 @@ import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function Index() {
   return (
-    <View  style={{
-      flex: 1,} /*Scrolling on FlatList doesn't work without this flex*/}>
 
-    <View style={styles.headerBar}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
-          <Text style={styles.homeButton}>Home</Text>
-        </View>
+<View  style={{flex: 1,} /*Scrolling on FlatList doesn't work without this flex style*/}>
 
-        <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end'}}>
-          <Link href="help" style={styles.headerButton}>Help</Link>
-          <Link href="settings" style={styles.headerButton}>Settings</Link>
-        </View>
-      </View>
+  <Header barStyle={styles.headerBar} homeStyle={styles.homeButton} buttonStyle={styles.headerButton}/>
 
-      <Calendar style={styles.calendar}/>
+  <Calendar calendarStyle={styles.calendar} entryStyle={styles.calendarEntry}/>
 
-      <View>
-        <NavigationButton name="Create New Activity" link="newActivityForm"/>
+  <NavigationButton style={styles.button} name="Create New Activity" link="newActivityForm"/>
 
-        <NavigationButton name="Log Activity" link="newActivityForm"/>
-      </View> 
+  <NavigationButton style={styles.button} name="Log Activity" link="newActivityForm"/>
 
-      <View style={{
-      flex: 1,} /*Scrolling on FlatList doesn't work without this flex*/}>
-        <Text style={{textAlign: "center"}}>Activity List</Text>
-        <FlatList
-          data = {ActivityList}
-          renderItem={({item}) => <ActivityButton link="newActivityForm" name={item} />}
-        />
-      </View>
-      
+  <ActivityList ActivityArr={ActivityArr} buttonStyle={styles.button} headerStyle={{textAlign: "center"}}/>
+
+</View>
+)}
+
+const Header = props => {
+return (
+  <View style={props.barStyle}>
+
+    <View style={{flex: 1, flexDirection: 'row'}}>
+      <Text style={props.homeStyle}>Home</Text>
     </View>
-  );
-}
+
+    <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end'}}>
+      <Link href="help" style={props.buttonStyle}>Help</Link>
+      <Link href="settings" style={props.buttonStyle}>Settings</Link>
+    </View>
+  </View>
+)}
+
+const Calendar = props => {
+  return (
+    
+    <View style={props.calendarStyle}>
+      {CalendarArr.map(day => (
+      <CalendarEntry style={props.entryStyle} key={day} day={day}/>))}
+    </View>
+)}
+
+const CalendarEntry = props => {
+  return (
+    <View style={props.style}>
+      <Text>{props.day}</Text>
+    </View>
+)}
 
 const NavigationButton = props => {
+return (
+<TouchableHighlight>
+  <Link href={props.link} style={props.style}>{props.name}</Link>
+</TouchableHighlight>
+)}
+
+const ActivityList = props => {
   return (
-  <TouchableHighlight>
-    <Link href={props.link} style={styles.button}>{props.name}</Link>
-  </TouchableHighlight>
-  );}
-
-  const ActivityButton = props => {
-    return (
-    <View style={styles.button}>
-      <TouchableHighlight>
-        <Link href={props.link}>{props.name}</Link>
-      </TouchableHighlight>
+    <View style={{
+      flex: 1,} /*Scrolling on FlatList doesn't work without this flex style*/}>
+      <Text style={props.headerStyle}>Activity List</Text>
+      <FlatList
+      data = {props.ActivityArr}
+      renderItem={({item}) => <ActivityButton style={props.buttonStyle} key={item} link="newActivityForm" name={item} />}  />
     </View>
-    );}
+)}
 
-    const CalendarEntry = props => {
-      return (
-        <View style={styles.calendarEntry}>{props.day}</View>
-      )
-    }
-
-    const Calendar = props => {
-      return (
-        
-        <View style={styles.calendar}>
-          {CalendarEntries.map(day => (
-          <CalendarEntry day={day}/>))}
-        </View>
-      )
-    }
+const ActivityButton = props => {
+return (
+<View style={props.style}>
+  <TouchableHighlight>
+    <Link href={props.link}>{props.name}</Link>
+  </TouchableHighlight>
+</View>
+)}
 
     const styles = StyleSheet.create({
       button: {
@@ -108,8 +115,6 @@ const NavigationButton = props => {
         flexWrap: 'wrap',
         width: 'auto',
         height: 250,
-
-
       },
     
       calendarEntry: {
@@ -118,7 +123,8 @@ const NavigationButton = props => {
         height: '25%',
         width: '10%',
         backgroundColor: "#d0d0d0",
-        borderColor: 'black'
+        borderColor: 'black',
+        borderWidth: 1,
       },
     
       listHeader: {
@@ -127,7 +133,7 @@ const NavigationButton = props => {
       },
     });
 
-    const ActivityList = [
+const ActivityArr = [
   "Read Book",
   "Exercise",
   "Homework",
@@ -145,6 +151,6 @@ const NavigationButton = props => {
   "Wash Dishes",
 ];
 
-const CalendarEntries = [
+const CalendarArr = [
   1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31
 ];
