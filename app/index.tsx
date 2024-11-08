@@ -1,23 +1,31 @@
-import { StyleSheet, Text, TouchableHighlight, View, FlatList, ScrollView, } from "react-native";
+import { StyleSheet, Text, TouchableHighlight, View, FlatList, ScrollView, Button, } from "react-native";
 import { Link } from "expo-router";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import { MenuProvider } from 'react-native-popup-menu';
+import {  Menu,  MenuOptions,  MenuOption,  MenuTrigger,} from 'react-native-popup-menu';
+import { withDecay } from "react-native-reanimated";
+import {useEffect} from "react";
+
+import { useLocalSearchParams } from "expo-router";
 
 export default function Index() {
   return (
 
-<View  style={{flex: 1,} /*Scrolling on FlatList doesn't work without this flex style*/}>
+  <MenuProvider>
+    <View  style={{flex: 1,} /*Scrolling on FlatList doesn't work without this flex style*/}>
 
-  <Header barStyle={styles.headerBar} homeStyle={styles.homeButton} buttonStyle={styles.headerButton}/>
+      <Header barStyle={styles.headerBar} homeStyle={styles.homeButton} buttonStyle={styles.headerButton}/>
 
-  <Calendar calendarStyle={styles.calendar} entryStyle={styles.calendarEntry}/>
+      <Calendar calendarStyle={styles.calendar} entryStyle={styles.calendarEntry}/>
 
-  <NavigationButton style={styles.button} name="Create New Activity" link="newActivityForm"/>
+      <NavigationButton style={styles.button} name="Create New Activity" link="newActivityForm"/>
 
-  <NavigationButton style={styles.button} name="Log Activity" link="newActivityForm"/>
+      <NavigationButton style={styles.button} name="Log Activity" link="newActivityForm"/>
 
-  <ActivityList ActivityArr={ActivityArr} buttonStyle={styles.button} headerStyle={{textAlign: "center"}}/>
+      <ActivityList ActivityArr={ActivityArr} buttonStyle={styles.button} headerStyle={{textAlign: "center"}}/>
 
-</View>
+    </View>
+  </MenuProvider>
 )}
 
 const Header = props => {
@@ -65,21 +73,34 @@ const ActivityList = props => {
       <Text style={props.headerStyle}>Activity List</Text>
       <FlatList
       data = {props.ActivityArr}
-      renderItem={({item}) => <ActivityButton style={props.buttonStyle} key={item} link="newActivityForm" name={item} />}  />
+      renderItem={({item}) => <ActivityButton style={props.buttonStyle} key={item} link="activityPage" name={item} />}  />
     </View>
 )}
 
 const ActivityButton = props => {
+  const buttonName = props.name
 return (
-<View style={props.style}>
-  <TouchableHighlight>
-    <Link href={props.link}>{props.name}</Link>
-  </TouchableHighlight>
-</View>
+  <View style={props.style}>
+    <Link href={{pathname: props.link, params: {name: buttonName}, }}>
+    {props.name}
+    </Link>
+    <View style={styles.popUpMenu}>
+      <Menu>
+          <MenuTrigger text='PLACEHOLDER DROPDOWN' />
+        <MenuOptions style={{backgroundColor: '#d0d0d0', height: 'auto'}}>
+          <MenuOption onSelect={() => alert(`Archive`)} text='Archive'/>
+          <MenuOption onSelect={() => alert(`Delete`)} >
+            <Text style={{color: 'red'}}>Delete</Text>
+          </MenuOption>
+        </MenuOptions>
+      </Menu>
+    </View>
+  </View>
 )}
 
     const styles = StyleSheet.create({
       button: {
+        flexDirection: 'row',
         textAlign: 'center',
         padding: 15,
         margin: 10,
@@ -130,6 +151,12 @@ return (
       listHeader: {
         width: 'auto',
         textAlign: 'center',
+      },
+
+      popUpMenu: {
+        flex: 3, 
+        justifyContent: 'flex-end',
+        flexDirection: 'row', 
       },
     });
 
