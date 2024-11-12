@@ -18,7 +18,7 @@ export default function Index() {
 
       <Calendar calendarStyle={styles.calendar} entryStyle={styles.calendarEntry}/>
 
-      <NavigationButton style={styles.button} name="Create New Activity" link="newActivityForm"/>
+      <NavigationButton style={styles.button} name="Create New Activity" link="ActivityForm"/>
 
       <NavigationButton style={styles.button} name="Log Activity" link="newActivityForm"/>
 
