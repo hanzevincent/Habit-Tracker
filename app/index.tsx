@@ -81,7 +81,7 @@ const ActivityButton = props => {
   const buttonName = props.name
 return (
   <View style={props.style}>
-    <Link href={{pathname: props.link, params: {name: buttonName}, }}>
+    <Link href={{pathname: props.link, params: {habitName: buttonName}, }}>
     {props.name}
     </Link>
     <View style={styles.popUpMenu}>
@@ -161,21 +161,8 @@ return (
     });
 
 const ActivityArr = [
-  "Read Book",
+  "Read",
   "Exercise",
-  "Homework",
-  "Clean Room",
-  "Wash Dishes",
-  "Read Book",
-  "Exercise",
-  "Homework",
-  "Clean Room",
-  "Wash Dishes",
-  "Read Book",
-  "Exercise",
-  "Homework",
-  "Clean Room",
-  "Wash Dishes",
 ];
 
 const CalendarArr = [
