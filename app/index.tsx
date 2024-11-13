@@ -14,8 +14,6 @@ export default function Index() {
   <MenuProvider>
     <View  style={{flex: 1,} /*Scrolling on FlatList doesn't work without this flex style*/}>
 
-      <Header barStyle={styles.headerBar} homeStyle={styles.homeButton} buttonStyle={styles.headerButton}/>
-
       <Calendar calendarStyle={styles.calendar} entryStyle={styles.calendarEntry}/>
 
       <NavigationButton style={styles.button} name="Create New Activity" link="ActivityForm"/>
@@ -26,21 +24,6 @@ export default function Index() {
 
     </View>
   </MenuProvider>
-)}
-
-const Header = props => {
-return (
-  <View style={props.barStyle}>
-
-    <View style={{flex: 1, flexDirection: 'row'}}>
-      <Text style={props.homeStyle}>Home</Text>
-    </View>
-
-    <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end'}}>
-      <Link href="help" style={props.buttonStyle}>Help</Link>
-      <Link href="settings" style={props.buttonStyle}>Settings</Link>
-    </View>
-  </View>
 )}
 
 const Calendar = props => {
@@ -143,7 +126,6 @@ return (
         flexWrap: 'wrap',
         height: '25%',
         width: '10%',
-        backgroundColor: "#d0d0d0",
         borderColor: 'black',
         borderWidth: 1,
       },
