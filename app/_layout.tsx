@@ -1,15 +1,16 @@
 import { Stack } from "expo-router";
-import { View, Button, Text, Image, StyleSheet } from 'react-native';
+import { View, Button, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from "expo-router";
-
+import { SvgUri } from 'react-native-svg';
+import headerButtons from "./headerButtons";
+ 
 export default function RootLayout() {
   return (
     <Stack
     screenOptions={{
       headerTitleStyle: {
         fontWeight: 'bold',
-      },
-      headerRight: () => <Header/>
+      }, headerRight: headerButtons
     }}>
       <Stack.Screen 
       name="index" 
@@ -19,21 +20,3 @@ export default function RootLayout() {
   );
 }
 
-const Header = props => {
-  return (  
-      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-        <Link style={styles.button} href="help">Help</Link>
-        <Link style={styles.button} href="settings">Settings</Link>
-      </View>
-  )}
-
-  const styles = StyleSheet.create({
-    button: {
-      flexDirection: 'row',
-      textAlign: 'center',
-      padding: 15,
-      margin: 10,
-      borderRadius: 5,
-      backgroundColor: "#a5c6fa",
-    },
-  });

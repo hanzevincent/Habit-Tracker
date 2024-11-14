@@ -5,6 +5,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import {  Menu,  MenuOptions,  MenuOption,  MenuTrigger,} from 'react-native-popup-menu';
 import { withDecay } from "react-native-reanimated";
 import {useEffect} from "react";
+import { SvgUri } from 'react-native-svg';
 
 import { useLocalSearchParams } from "expo-router";
 
