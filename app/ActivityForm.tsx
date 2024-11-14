@@ -4,6 +4,9 @@ import { Pressable, View, Text, TextInput, Button, StyleSheet, SafeAreaView } fr
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { ColorValue } from 'react-native/types';
+// import { CheckBox } from '@react-native-community/checkbox';
+import { Checkbox } from 'expo-checkbox';
+// import { InputColor } from 'react-input-color';
 
 /* Data and types in form */
 type FormFields = {
@@ -28,60 +31,51 @@ export default function App() {
       <Text style={styles.appTitle}>New Activity</Text>
         <form action="" onSubmit= {handleSubmit(onSubmit)}>
           {/* Activity Name Input */}
-          <div>
-            <label>
-              Activity Name
-              <input {...register ("activity", {required: "Activity Name is required",
+          <View>
+              <Text>Activity Name</Text>
+              <TextInput {...register ("activity", {required: "Activity Name is required",
               validate: value => {
                 /* if (value.includes("A")) {
                   return "Activity Name may not begin with a special character";
                 } */
                 return true;
               },
-              }) } type='text' placeholder='knitting'/>
+              }) } placeholder='knitting'/>
               {errors.activity && <div style={styles.errorText}>{errors.activity.message}</div>}
-            </label>
-          </div>
+          </View>
           
           {/* Color input */}
-          <div>
-            <label>
-              Activity Color
-              <input {...register ("color", {required: "Color is Required"}) } type='color'/>
-            </label>
-          </div>
+          {/*<View>
+              <Text>Activity Color</Text>
+              <InputColor {...register ("color", {required: "Color is Required"}) }/>
+          </View>*/}
           
-          {/* Checkbox inputs */}
-          <div>
-            <label>
-              Log Hours
-              <input {...register ("hours")} type='checkbox'/>
+          {/* Checkbox inputs */} 
+          <View>
+              <Text>Log Hours</Text>
+              <Checkbox {...register ("hours")}/>
               
-            </label>
-            <label>
-              Upload Media
-              <input {...register ("media")} type='checkbox'/>
+              <Text>Upload Media</Text>
+              <Checkbox {...register ("media")}/>
               
-            </label>
-            <label>
-              Write notes
-              <input {...register ("notes")} type='checkbox'/>
+              <Text>Write notes</Text>
+              <Checkbox {...register ("notes")}/>
               
-            </label>
+            <View>
+              <Button title={"submit"} disabled={isSubmitting} type='submit'
+                {...isSubmitting? "Submitting..." : "Create Activity"}/>
+            </View>
             
-            <div>
-              <button disabled={isSubmitting} type='submit'>
-                {isSubmitting? "Submitting..." : "Create Activity"}
-              </button>
-            </div>
-            
-            </div>
+            </View>
         </form>
       
-    </View>
+    </View> 
   );
 }
 
+/* disabled={isSubmitting} type='submit'>
+                {isSubmitting? "Submitting..." : "Create Activity"}
+                onChange={} */
 
 /* Styles */
 const styles = StyleSheet.create({
