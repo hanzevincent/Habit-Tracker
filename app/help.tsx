@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import { Stack } from "expo-router";
 
 export default function help() {
   return (
@@ -9,6 +10,12 @@ export default function help() {
         alignItems: "center",
       }}
     >
+      <Stack.Screen
+      options={{
+        title: "Help"
+      }}
+      />
+
       <Text>Help.</Text>
     </View>
   );
