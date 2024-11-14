@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Text, View, FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
+import { Stack } from 'expo-router';
 
 export default function activityPage() {
 
@@ -16,6 +17,13 @@ export default function activityPage() {
         alignItems: "center",
       }}
     >
+
+      <Stack.Screen
+      options={{
+        title: habitName
+      }}
+      />
+
       <Text>{habitName}</Text>
 
       <Image source={{uri: imageSource}} style={styles.mainImage} />

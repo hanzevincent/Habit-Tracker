@@ -5,6 +5,7 @@ import { MenuProvider } from 'react-native-popup-menu';
 import {  Menu,  MenuOptions,  MenuOption,  MenuTrigger,} from 'react-native-popup-menu';
 import { withDecay } from "react-native-reanimated";
 import {useEffect} from "react";
+import { SvgUri } from 'react-native-svg';
 
 import { useLocalSearchParams } from "expo-router";
 
@@ -13,8 +14,6 @@ export default function Index() {
 
   <MenuProvider>
     <View  style={{flex: 1,} /*Scrolling on FlatList doesn't work without this flex style*/}>
-
-      <Header barStyle={styles.headerBar} homeStyle={styles.homeButton} buttonStyle={styles.headerButton}/>
 
       <Calendar calendarStyle={styles.calendar} entryStyle={styles.calendarEntry}/>
 
@@ -26,21 +25,6 @@ export default function Index() {
 
     </View>
   </MenuProvider>
-)}
-
-const Header = props => {
-return (
-  <View style={props.barStyle}>
-
-    <View style={{flex: 1, flexDirection: 'row'}}>
-      <Text style={props.homeStyle}>Home</Text>
-    </View>
-
-    <View style={{flexDirection: 'row', flex: 1, justifyContent: 'flex-end'}}>
-      <Link href="help" style={props.buttonStyle}>Help</Link>
-      <Link href="settings" style={props.buttonStyle}>Settings</Link>
-    </View>
-  </View>
 )}
 
 const Calendar = props => {
@@ -143,7 +127,6 @@ return (
         flexWrap: 'wrap',
         height: '25%',
         width: '10%',
-        backgroundColor: "#d0d0d0",
         borderColor: 'black',
         borderWidth: 1,
       },

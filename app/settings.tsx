@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+import { Stack } from "expo-router";
 
 export default function Settings() {
   return (
@@ -9,6 +10,12 @@ export default function Settings() {
         alignItems: "center",
       }}
     >
+      <Stack.Screen
+      options={{
+        title: "Settings"
+      }}
+      />
+      
       <Text>Settings.</Text>
     </View>
   );
