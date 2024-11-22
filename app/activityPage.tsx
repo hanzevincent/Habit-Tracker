@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import { Text, View, FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
 import { Stack } from 'expo-router';
+import { LineGraph } from './lineGraph';
 
 export default function activityPage() {
 
@@ -11,6 +12,7 @@ export default function activityPage() {
   const data = [{value: 15}, {value: 30}, {value: 26}, {value: 40}]
 
   return (
+    <ScrollView>
     <View
       style={{
         justifyContent: "center",
@@ -26,6 +28,7 @@ export default function activityPage() {
 
       <Text>{habitName}</Text>
 
+      
       <Image source={{uri: imageSource}} style={styles.mainImage} />
       <Text>Gallery</Text>
       <FlatList 
@@ -39,15 +42,16 @@ export default function activityPage() {
       <Text>Analytics</Text>
       <Text>{analytics.days} days this month.</Text>
       <Text>{analytics.hoursDelta} more hours than last month.</Text>
-      <Text>Hours spent on {habitName}</Text>
+
+      <LineGraph data={[1, 2, 3, 3, 2, 1, 2, 1, 4, 2, 3]} color="black" label="hours" stat="120k"/>
+
       <Text>Log of Entries</Text>
-      <FlatList 
-        data={notes}
-        renderItem={({item}) => <TouchableOpacity>
-                                  <Text>{item.date}</Text>
-                                </TouchableOpacity>}
-      />
+      {notes.map(day => (<TouchableOpacity key={day.date}>
+                          <Text>{day.date}</Text>
+                        </TouchableOpacity>))}
+
     </View>
+    </ScrollView>
   );
 }
 
