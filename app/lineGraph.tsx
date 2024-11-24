@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { Svg, Defs, LinearGradient, Path, Stop, Line, G, Circle } from 'react-native-svg';
+import { Svg, Defs, LinearGradient, Path, Stop, Line, G, Circle, Rect } from 'react-native-svg';
 import * as d3 from 'd3';
 
 export type LineGraphProps = {
@@ -28,28 +28,32 @@ export function LineGraph(props: LineGraphProps) {
     const max = Math.max(...props.data);
 
     {/* https://www.freecodecamp.org/news/javascript-range-create-an-array-of-numbers-with-the-from-method/ */}
-    const domain = Array.from({length: data.length}, (value, index) => index);
-    const range = Array.from({length: max - 1}, (value, index) => index + 1);
+    const domain = [{letter:"Mon", i: 0}, {letter:"Tue", i: 1}, {letter:"Wed", i: 2}, {letter:"Thur", i: 3}, {letter:"Fri", i: 4}, {letter:"Sat", i: 5}, {letter:"Sun", i: 6}];
+    const range = Array.from({length: max+1}, (value, index) => index+1);
 
-    const yScale = d3.scaleLinear().domain([min,max]).range([height,0]);
-    const xScale = d3.scaleLinear().domain([0,props.data.length - 1]).range([0,width]);
+    const yScale = d3.scaleLinear().domain([0,max+1]).range([height,0]);
+    const xScale = d3.scaleLinear().domain([0, 6]).range([0,width]);
 
     const lineFunction = d3.line<number>().x((d, ix) => xScale(ix)).y((d, ix) => yScale(d));
 
     const svgLine = lineFunction(data);
 
-    return <View style={{borderColor: "grey", borderWidth: 2, margin: 25}} onLayout={ev => {setWidth(ev.nativeEvent.layout.width)}} width={300}>
-        <Svg width={width} height={height} >
+    return <View style={{margin: 25}} onLayout={ev => {setWidth(ev.nativeEvent.layout.width)}} width={300}>
+        <Svg width={width} height={height} stroke="grey" >
+
             {range.map(y => (<View key={y}>
-                                <Text style={{position: 'absolute', top: yScale(y+1), left: -15}}>{y}</Text>
-                                <Line  x1="0" x2={width} y1={yScale(y)} y2={yScale(y)} strokeWidth={1} stroke="grey"/>
+                                <Text style={{position: 'absolute', top: yScale(y)-10, left: -15}}>{y}</Text>
+                                <Line  x1="0" x2={width} y1={yScale(y)} y2={yScale(y)} strokeWidth={1} stroke="grey" strokeOpacity={0.5} strokeDasharray={[5,5]}/>
                             </View>))}
-            {domain.map(x => (<View key={x}>
-                                <Text style={{position: 'absolute', top: height, left: xScale(x)}}>{x}</Text>
-                                <Line x1={xScale(x)} x2={xScale(x)} y1={0} y2={height} strokeWidth={1} stroke="grey"/>
+
+            {domain.map(day => (<View key={day.i}>
+                                <Text style={{position: 'absolute', top: height, left: xScale(day.i)-15}}>{day.letter}</Text>
+                                <Line x1={xScale(day.i)} x2={xScale(day.i)} y1={0} y2={height} strokeWidth={1} stroke="grey" strokeOpacity={0.5} strokeDasharray={[5,5]}/>
                             </View>))}
-            {data.map((d, i) => (<Circle stroke="red" key={i} cx={xScale(i)} cy={yScale(d)} r="2.5" />))}
-            <Path d={svgLine} stroke="black" fill="none" strokeWidth={2} />
+
+            <Path d={svgLine} stroke="black" fill="none" strokeWidth={3} strokeLinejoin='bevel' strokeLinecap='square'/>
+
+            <Rect x={0} width={width} height={height} fill="none" stroke="black" strokeWidth={2} rx={5}/>
         </Svg>
     </View>
 }
