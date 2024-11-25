@@ -4,78 +4,129 @@ import { Pressable, View, Text, TextInput, Button, StyleSheet, SafeAreaView } fr
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { ColorValue } from 'react-native/types';
-// import { CheckBox } from '@react-native-community/checkbox';
 import { Checkbox } from 'expo-checkbox';
-// import { InputColor } from 'react-input-color';
+import InputColor, { InputColorProps } from 'react-input-color';
+{/* import { InputColor } from 'react-input-color'; */}
 
 /* Data and types in form */
 type FormFields = {
   activity: string;
-  color: ColorValue;
+  color: string;
   hours: boolean;
   media: boolean;
   notes: boolean;
 };
 
 export default function App() {
-  const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<FormFields>();
-/* async form waits for data to be processed */
-  const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    /* waits 1 sec default */
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+  /*uses pre-defined form fields when the form is submitted*/
+  const {control, handleSubmit} = useForm<FormFields>({
+    /* initialize to empty string and false*/
+    defaultValues: {
+      activity: '',
+      color: '',
+      hours: false,
+      media: false,
+      notes: false,  
+    },
+  });
+
+  /*Logs all form fields to console when form is submitted*/
+  const onCreatePressed: SubmitHandler<FormFields> = data => {
+    console.log("onCreatePressed");
     console.log(data);
   };
 
+  /* const hex = require('string-hex'); */
+ 
+
+  /*Page Layout*/
   return (
     <View style={styles.appContainer}>
       <Text style={styles.appTitle}>New Activity</Text>
-        <form action="" onSubmit= {handleSubmit(onSubmit)}>
+        <View>
           {/* Activity Name Input */}
+          {/*string values use onTextChange*/}
           <View>
               <Text>Activity Name</Text>
-              <TextInput {...register ("activity", {required: "Activity Name is required",
-              validate: value => {
-                /* if (value.includes("A")) {
-                  return "Activity Name may not begin with a special character";
-                } */
-                return true;
-              },
-              }) } placeholder='knitting'/>
-              {errors.activity && <div style={styles.errorText}>{errors.activity.message}</div>}
+              <Controller
+                control={control}
+                name="activity"
+                rules={{ required: "Activity Name is required" }}
+                render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
+                  <>
+                    <TextInput
+                      value={value}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder="knitting"
+                    />
+                    {error && <Text style={styles.errorText}>{error.message}</Text>}
+                  </>
+                )}
+              />
+
           </View>
           
           {/* Color input */}
-          {/*<View>
-              <Text>Activity Color</Text>
-              <InputColor {...register ("color", {required: "Color is Required"}) }/>
-          </View>*/}
+          <View>
+              {/*<Text>Activity Color</Text>*/}
+              {/*<Controller
+                control={control}
+                name="color"
+                render={({ field: { value, onChange } }) => (
+                  <View>
+                    <InputColor
+                      initialValue={hex(value)}
+                      onChange={onChange}
+                    />
+                    <Text>Selected Color: {value}</Text>
+                  </View>
+                )}
+                />*/}
+          </View>
           
           {/* Checkbox inputs */} 
+          {/*boolean values use onValueChange*/}
           <View>
               <Text>Log Hours</Text>
-              <Checkbox {...register ("hours")}/>
+              <Controller
+                control={control}
+                name="hours"
+                render={({ field: { value, onChange } }) => (
+                  <Checkbox value={value} onValueChange={onChange} />
+                )}
+              />
               
               <Text>Upload Media</Text>
-              <Checkbox {...register ("media")}/>
+              <Controller
+                control={control}
+                name="media"
+                render={({ field: { value, onChange } }) => (
+                  <Checkbox value={value} onValueChange={onChange} />
+                )}
+              />
               
               <Text>Write notes</Text>
-              <Checkbox {...register ("notes")}/>
+              <Controller
+                control={control}
+                name="notes"
+                render={({ field: { value, onChange } }) => (
+                  <Checkbox value={value} onValueChange={onChange} />
+                )}
+              />
               
             <View>
-              <Button title={"submit"} disabled={isSubmitting} type='submit'
-                {...isSubmitting? "Submitting..." : "Create Activity"}/>
+              <Button title={"submit"}
+                onPress={handleSubmit(onCreatePressed)}
+              />
             </View>
             
             </View>
-        </form>
+        </View>
       
     </View> 
   );
 }
-
-/* disabled={isSubmitting} type='submit'>
-                {isSubmitting? "Submitting..." : "Create Activity"}
-                onChange={} */
 
 /* Styles */
 const styles = StyleSheet.create({
