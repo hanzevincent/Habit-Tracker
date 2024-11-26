@@ -25,12 +25,9 @@ export default function activityPage() {
         title: habitName
       }}
       />
-
-      <Text>{habitName}</Text>
-
       
+      <Text>Gallery:</Text>
       <Image source={{uri: imageSource}} style={styles.mainImage} />
-      <Text>Gallery</Text>
       <FlatList 
         horizontal={true}
         data={images}
@@ -39,16 +36,17 @@ export default function activityPage() {
                                 </TouchableOpacity>}
       />
 
-      <Text>Analytics</Text>
+      <Text>Analytics:</Text>
       <Text>{analytics.days} days this month.</Text>
       <Text>{analytics.hoursDelta} more hours than last month.</Text>
 
-      <LineGraph data={[1, 2, 3, 3, 2, 1, 2, 1, 4, 2, 3]} color="black" label="hours" stat="120k"/>
+      <LineGraph data={[1, 2, 3, 3, 2, 1, 2]} color="black" label="hours" stat="120k"/>
 
-      <Text>Log of Entries</Text>
-      {notes.map(day => (<TouchableOpacity key={day.date}>
+      <Text>Notes:</Text>
+      {notes.map(day => (<View key={day.date}>
                           <Text>{day.date}</Text>
-                        </TouchableOpacity>))}
+                          <Text>{day.note}</Text>
+                        </View>))}
 
     </View>
     </ScrollView>
@@ -80,7 +78,7 @@ const styles = StyleSheet.create({
   mainImage: {height: 250, 
               width: 250, 
               borderColor: 'black', 
-              borderWidth: 5
+              borderWidth: 2,
   },
   
   listImage: {height: 50,
