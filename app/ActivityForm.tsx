@@ -1,10 +1,11 @@
 import React , {useState} from 'react';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
-import { Pressable, View, Text, TextInput, Button, StyleSheet, SafeAreaView } from 'react-native';
+import { Pressable, View, Text, TextInput, Button, StyleSheet, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import { ColorValue } from 'react-native/types';
 import { Checkbox } from 'expo-checkbox';
+import { Stack, Link, router } from 'expo-router';
 import InputColor, { InputColorProps } from 'react-input-color';
 {/* import { InputColor } from 'react-input-color'; */}
 
@@ -34,6 +35,7 @@ export default function App() {
   const onCreatePressed: SubmitHandler<FormFields> = data => {
     console.log("onCreatePressed");
     console.log(data);
+    router.back();
   };
 
   /* const hex = require('string-hex'); */
@@ -42,6 +44,11 @@ export default function App() {
   /*Page Layout*/
   return (
     <View style={styles.appContainer}>
+      <Stack.Screen
+      options={{
+        title: "Create New Habit"
+      }}
+      />
       <Text style={styles.appTitle}>New Activity</Text>
         <View>
           {/* Activity Name Input */}
