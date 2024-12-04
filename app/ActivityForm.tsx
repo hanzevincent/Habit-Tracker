@@ -43,18 +43,17 @@ export default function App() {
 
   /*Page Layout*/
   return (
-    <View style={styles.appContainer}>
+    <View >
       <Stack.Screen
       options={{
         title: "Create New Habit"
       }}
       />
-      <Text style={styles.appTitle}>New Activity</Text>
         <View>
           {/* Activity Name Input */}
           {/*string values use onTextChange*/}
-          <View>
-              <Text>Activity Name</Text>
+          <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Activity Name</Text>
               <Controller
                 control={control}
                 name="activity"
@@ -62,6 +61,7 @@ export default function App() {
                 render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                   <>
                     <TextInput
+                    style={[styles.inputActual, {flex: 2}]}
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
@@ -95,34 +95,40 @@ export default function App() {
           {/* Checkbox inputs */} 
           {/*boolean values use onValueChange*/}
           <View>
-              <Text>Log Hours</Text>
+            <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Log Hours</Text>
               <Controller
                 control={control}
                 name="hours"
                 render={({ field: { value, onChange } }) => (
-                  <Checkbox value={value} onValueChange={onChange} />
+                  <Checkbox value={value} onValueChange={onChange}  style={styles.inputActual}/>
                 )}
               />
+            </View>
               
-              <Text>Upload Media</Text>
+            <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Upload Media</Text>
               <Controller
                 control={control}
                 name="media"
                 render={({ field: { value, onChange } }) => (
-                  <Checkbox value={value} onValueChange={onChange} />
+                  <Checkbox value={value} onValueChange={onChange} style={styles.inputActual}/>
                 )}
               />
-              
-              <Text>Write notes</Text>
+            </View>
+
+            <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Write notes</Text>
               <Controller
                 control={control}
                 name="notes"
                 render={({ field: { value, onChange } }) => (
-                  <Checkbox value={value} onValueChange={onChange} />
+                  <Checkbox value={value} onValueChange={onChange} style={styles.inputActual}/>
                 )}
               />
+            </View>
               
-            <View>
+            <View style={{margin: 15, }}>
               <Button title={"submit"}
                 onPress={handleSubmit(onCreatePressed)}
               />
@@ -137,11 +143,6 @@ export default function App() {
 
 /* Styles */
 const styles = StyleSheet.create({
-  appContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   appTitle: {
     marginVertical: 16,
     fontWeight: 'bold',
@@ -150,4 +151,13 @@ const styles = StyleSheet.create({
   errorText: {
     color: 'red',
   },
+  inputLabel: {
+    fontSize: 15, fontWeight: 'bold', margin: 15, flex: 1
+  },
+  inputActual: {
+    margin: 15, borderColor: 'black', borderWidth: 3, borderRadius: 5
+  },
+  inputBox: {
+    flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', margin: 15, borderWidth: 3, borderRadius: 5
+  }
 });

@@ -19,7 +19,7 @@ export type LineGraphProps = {
 
 const GRAPH_ASPECT_RATIO = 9/16;
 
-export function LineGraph(props: LineGraphProps) {
+export default function LineGraph(props: LineGraphProps) {
     const [width, setWidth] = useState(0);
     const height = 200
     const data = props.data;
@@ -42,18 +42,18 @@ export function LineGraph(props: LineGraphProps) {
         <Svg width={width} height={height} stroke="grey" >
 
             {range.map(y => (<View key={y}>
-                                <Text style={{position: 'absolute', top: yScale(y)-10, left: -15}}>{y}</Text>
+                                <Text style={{position: 'absolute', top: yScale(y)-10, left: -15, fontWeight: "bold"}}>{y}</Text>
                                 <Line  x1="0" x2={width} y1={yScale(y)} y2={yScale(y)} strokeWidth={1} stroke="grey" strokeOpacity={0.5} strokeDasharray={[5,5]}/>
                             </View>))}
 
             {domain.map(day => (<View key={day.i}>
-                                <Text style={{position: 'absolute', top: height, left: xScale(day.i)-15}}>{day.letter}</Text>
+                                <Text style={{position: 'absolute', top: height, left: xScale(day.i)-15, fontWeight: 'bold'}}>{day.letter}</Text>
                                 <Line x1={xScale(day.i)} x2={xScale(day.i)} y1={0} y2={height} strokeWidth={1} stroke="grey" strokeOpacity={0.5} strokeDasharray={[5,5]}/>
                             </View>))}
 
             <Path d={svgLine} stroke="black" fill="none" strokeWidth={3} strokeLinejoin='bevel' strokeLinecap='square'/>
 
-            <Rect x={0} width={width} height={height} fill="none" stroke="black" strokeWidth={2} rx={5}/>
+            <Rect x={0} width={width} height={height} fill="none" stroke="black" strokeWidth={5} rx={8}/>
         </Svg>
     </View>
 }
