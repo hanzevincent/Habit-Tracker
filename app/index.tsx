@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableHighlight, View, FlatList, ScrollView, Button, } from "react-native";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { MenuProvider } from 'react-native-popup-menu';
 import {  Menu,  MenuOptions,  MenuOption,  MenuTrigger, renderers} from 'react-native-popup-menu';
@@ -12,27 +12,34 @@ import DropdownSvg from '../assets/icons/dropdown.js';
 import { useLocalSearchParams } from "expo-router";
 
 export default function Index() {
-
+  
   interface habit {name: String; color: String;};
 
   interface daysHabits {dots: habit[]};
 
   interface allDaysHabits {[id: string]: daysHabits};
 
-  const read = {key: "Read", color: "red"};
-  const exercise = {key:  "Exercise", color: "blue"};
-  const knitting = {key:  "Knitting", color: "green"};
+  const read = {key: "Read", color: "lightcoral"};
+  const exercise = {key:  "Exercise", color: "cornflowerblue"};
+  const knitting = {key:  "Knitting", color: "lightgreen"};
 
-  const d1 = {date: "2024-11-30", dots: [read, exercise]};
-  const d2 = {date: "2024-11-28", dots: [read]};
-  const d3 = {date: "2024-11-29", dots: [exercise]};
+  const days = [
+    {date: "2024-12-01", dots: [read, exercise, knitting]},
+    {date: "2024-12-02", dots: [read, knitting]},
+    {date: "2024-12-03", dots: [knitting, exercise]},
+  ];
+
 
   //https://stackoverflow.com/questions/64044386/how-to-dynamically-populate-calendar-marked-dates-from-api-react-native-redux
   let mark = {};
 
-  mark[d3.date] = {dots: d3.dots};
+  days.forEach((key) => {
+    mark[key.date] = {dots: key.dots};
+  })
+  
+  /*mark[d3.date] = {dots: d3.dots};
   mark[d2.date] = {dots: d2.dots};
-  mark[d1.date] = {dots: d1.dots};
+  mark[d1.date] = {dots: d1.dots};*/
 
   const ActivityArr = [
     read, exercise, knitting
@@ -66,9 +73,9 @@ export default function Index() {
           markedDates={ mark }
         />
 
-      <NavigationButton style={[styles.button, {borderColor: "#00d1cf"}]} name="Create New Activity" link="ActivityForm"/>
+      <NavigationButton style={[styles.button, {backgroundColor: "skyblue"}]} name="Create New Activity" link="ActivityForm" color="#00d1cf"/>
 
-      <NavigationButton style={[styles.button, {borderColor: "#c560ff"}]} name="Log Activity" link="ActivityForm"/> 
+      <NavigationButton style={[styles.button, {backgroundColor: "orchid"}]} name="Log Activity" link="ActivityForm" color="#c560ff"/> 
 
       <ActivityList ActivityArr={ActivityArr} buttonStyle={[styles.button]} headerStyle={{textAlign: "center", alignItems: "center", fontSize: 20, fontWeight: "bold"}}/>
     </View>
@@ -95,6 +102,7 @@ return (
 <TouchableHighlight>
   <Link href={props.link} style={props.style}>{props.name}</Link>
 </TouchableHighlight>
+
 )}
 
 const ActivityList = props => {
@@ -104,7 +112,7 @@ const ActivityList = props => {
       <Text style={props.headerStyle}>Activity List</Text>
       <FlatList
       data = {props.ActivityArr}
-      renderItem={({item}) => <ActivityButton style={[props.buttonStyle, {borderColor: item.color}]} key={item} link="activityPage" name={item.key} />}  />
+      renderItem={({item}) => <ActivityButton style={[props.buttonStyle, {backgroundColor: item.color}]} key={item} link="activityPage" name={item.key} />}  />
     </View>
 )}
 
@@ -186,3 +194,7 @@ return (
         backgroundColor: 'black',
       }
     });
+
+    function buttonNav(href): void {
+      router.push(href);
+    }

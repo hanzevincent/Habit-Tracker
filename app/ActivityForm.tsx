@@ -59,7 +59,9 @@ export default function App() {
                 name="activity"
                 rules={{ required: "Activity Name is required" }}
                 render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-                  <>
+                  <TextInputError error={error} onBlur={onBlur} value={value} onChange={onChange}/>
+
+                  /*<>
                     <TextInput
                     style={[styles.inputActual, {flex: 2}]}
                       value={value}
@@ -68,7 +70,7 @@ export default function App() {
                       placeholder="knitting"
                     />
                     {error && <Text style={styles.errorText}>{error.message}</Text>}
-                  </>
+                  </>*/
                 )}
               />
 
@@ -129,9 +131,9 @@ export default function App() {
             </View>
               
             <View style={{margin: 15, }}>
-              <Button title={"submit"}
-                onPress={handleSubmit(onCreatePressed)}
-              />
+              <Pressable style={{}} onPress={handleSubmit(onCreatePressed)}>
+                <Text style={[styles.button, { backgroundColor:'skyblue', textAlign: 'center', fontSize: 20, fontWeight: 'bold', }]}>Submit</Text>
+              </Pressable>
             </View>
             
             </View>
@@ -139,6 +141,26 @@ export default function App() {
       
     </View> 
   );
+}
+
+const TextInputError = props => {
+  let varMargin = 15;
+  if (props.error) {
+    varMargin = 0;
+  }
+
+  return (
+  <View style={{flex: 2}}>
+    <TextInput
+        style={[, styles.inputActual, {marginBottom: varMargin}]}
+        value={props.value}
+        onChangeText={props.onChange}
+        onBlur={props.onBlur}
+        placeholder="knitting"
+    />
+    {props.error && <Text style={[styles.errorText, {textAlign: 'center', margin: 5}]}>{props.error.message}</Text>}
+  </View>
+  )
 }
 
 /* Styles */
@@ -155,9 +177,21 @@ const styles = StyleSheet.create({
     fontSize: 15, fontWeight: 'bold', margin: 15, flex: 1
   },
   inputActual: {
-    margin: 15, borderColor: 'black', borderWidth: 3, borderRadius: 5
+    margin: 15, borderColor: 'black', borderWidth: 3, borderRadius: 5, padding: 10
   },
   inputBox: {
     flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', margin: 15, borderWidth: 3, borderRadius: 5
-  }
+  },
+  button: {
+    flexDirection: 'row',
+    fontSize: 20,
+    alignItems: "center",
+    textAlign: 'center',
+    padding: 15,
+    margin: 5,
+    borderRadius: 5,
+    height:60,
+    fontWeight: "bold",
+    borderWidth:  3,
+  },
 });
