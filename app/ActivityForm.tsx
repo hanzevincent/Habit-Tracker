@@ -44,32 +44,34 @@ export default function App() {
 
   /*Page Layout*/
   return (
-    <View style={styles.appContainer}>
+    <View >
       <Stack.Screen
       options={{
         title: "Create New Habit"
       }}
       />
-      <Text style={styles.appTitle}>New Activity</Text>
         <View>
           {/* Activity Name Input */}
           {/*string values use onTextChange*/}
-          <View>
-              <Text>Activity Name</Text>
+          <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Activity Name</Text>
               <Controller
                 control={control}
                 name="activity"
                 rules={{ required: "Activity Name is required" }}
                 render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
-                  <>
+                  <TextInputError error={error} onBlur={onBlur} value={value} onChange={onChange}/>
+
+                  /*<>
                     <TextInput
+                    style={[styles.inputActual, {flex: 2}]}
                       value={value}
                       onChangeText={onChange}
                       onBlur={onBlur}
                       placeholder="knitting"
                     />
                     {error && <Text style={styles.errorText}>{error.message}</Text>}
-                  </>
+                  </>*/
                 )}
               />
 
@@ -96,37 +98,43 @@ export default function App() {
           {/* Checkbox inputs */} 
           {/*boolean values use onValueChange*/}
           <View>
-              <Text>Log Hours</Text>
+            <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Log Hours</Text>
               <Controller
                 control={control}
                 name="hours"
                 render={({ field: { value, onChange } }) => (
-                  <Checkbox value={value} onValueChange={onChange} />
+                  <Checkbox value={value} onValueChange={onChange}  style={styles.inputActual}/>
                 )}
               />
+            </View>
               
-              <Text>Upload Media</Text>
+            <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Upload Media</Text>
               <Controller
                 control={control}
                 name="media"
                 render={({ field: { value, onChange } }) => (
-                  <Checkbox value={value} onValueChange={onChange} />
+                  <Checkbox value={value} onValueChange={onChange} style={styles.inputActual}/>
                 )}
               />
-              
-              <Text>Write notes</Text>
+            </View>
+
+            <View style={styles.inputBox}>
+              <Text style={styles.inputLabel}>Write notes</Text>
               <Controller
                 control={control}
                 name="notes"
                 render={({ field: { value, onChange } }) => (
-                  <Checkbox value={value} onValueChange={onChange} />
+                  <Checkbox value={value} onValueChange={onChange} style={styles.inputActual}/>
                 )}
               />
+            </View>
               
-            <View>
-              <Button title={"submit"}
-                onPress={handleSubmit(onCreatePressed)}
-              />
+            <View style={{margin: 15, }}>
+              <Pressable style={{}} onPress={handleSubmit(onCreatePressed)}>
+                <Text style={[styles.button, { backgroundColor:'skyblue', textAlign: 'center', fontSize: 20, fontWeight: 'bold', }]}>Submit</Text>
+              </Pressable>
             </View>
             
             </View>
@@ -136,13 +144,28 @@ export default function App() {
   );
 }
 
+const TextInputError = props => {
+  let varMargin = 15;
+  if (props.error) {
+    varMargin = 0;
+  }
+
+  return (
+  <View style={{flex: 2}}>
+    <TextInput
+        style={[, styles.inputActual, {marginBottom: varMargin}]}
+        value={props.value}
+        onChangeText={props.onChange}
+        onBlur={props.onBlur}
+        placeholder="knitting"
+    />
+    {props.error && <Text style={[styles.errorText, {textAlign: 'center', margin: 5}]}>{props.error.message}</Text>}
+  </View>
+  )
+}
+
 /* Styles */
 const styles = StyleSheet.create({
-  appContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   appTitle: {
     marginVertical: 16,
     fontWeight: 'bold',
@@ -150,5 +173,26 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: 'red',
+  },
+  inputLabel: {
+    fontSize: 15, fontWeight: 'bold', margin: 15, flex: 1
+  },
+  inputActual: {
+    margin: 15, borderColor: 'black', borderWidth: 3, borderRadius: 5, padding: 10
+  },
+  inputBox: {
+    flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', margin: 15, borderWidth: 3, borderRadius: 5
+  },
+  button: {
+    flexDirection: 'row',
+    fontSize: 20,
+    alignItems: "center",
+    textAlign: 'center',
+    padding: 15,
+    margin: 5,
+    borderRadius: 5,
+    height:60,
+    fontWeight: "bold",
+    borderWidth:  3,
   },
 });
