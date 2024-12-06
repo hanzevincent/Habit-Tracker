@@ -40,7 +40,6 @@ export default function Index() {
     <View  style={{flex: 1, backgroundColor: "white"} /*Scrolling on FlatList doesn't work without this flex style*/}>
 
         <Calendar
-
           theme={{
                 textSectionTitleColor: '#b6c1cd',
                 textSectionTitleDisabledColor: '#d9e1e8',
@@ -58,19 +57,19 @@ export default function Index() {
                 textMonthFontSize: 25,
                 textDayHeaderFontSize: 15,
           }}
-
-      <NavigationButton style={styles.button} name="Log Activity" link="logActivityForm"/>
-          markingType={'multi-dot'}
-          markedDates={ mark }
-        />
+      />
+      <>
+      <Link style={[styles.button, {backgroundColor: "orchid"}]} href="logActivityForm">Log Activity</Link>
 
       <Link style={[styles.button, {backgroundColor: "skyblue"}]} href="ActivityForm" color="#00d1cf">Create New Activity</Link>
 
-      <Link style={[styles.button, {backgroundColor: "orchid"}]} href="Log Activity" link="ActivityForm" color="#c560ff">Log Activity</Link> 
+      {/* <Link style={[styles.button, {backgroundColor: "orchid"}]} href="Log Activity" link="ActivityForm" color="#c560ff">Log Activity</Link>  */}
 
       <MenuProvider>
       <ActivityList ActivityArr={ActivityArr} buttonStyle={[styles.button]} headerStyle={styles.headerStyle}/>
       </MenuProvider>
+      </>
+      
     </View>
 )}
 
