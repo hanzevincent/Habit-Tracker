@@ -35,6 +35,7 @@ export default function App() {
   const onCreatePressed: SubmitHandler<FormFields> = data => {
     console.log("onCreatePressed");
     console.log(data);
+    /* back arrow navigation */
     router.back();
   };
 

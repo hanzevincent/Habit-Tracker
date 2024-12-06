@@ -19,7 +19,7 @@ export default function Index() {
 
       <NavigationButton style={styles.button} name="Create New Activity" link="ActivityForm"/>
 
-      <NavigationButton style={styles.button} name="Log Activity" link="newActivityForm"/>
+      <NavigationButton style={styles.button} name="Log Activity" link="logActivityForm"/>
 
       <ActivityList ActivityArr={ActivityArr} buttonStyle={styles.button} headerStyle={{textAlign: "center"}}/>
 
