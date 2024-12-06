@@ -13,15 +13,15 @@ import { useLocalSearchParams } from "expo-router";
 
 export default function Index() {
   
-  interface habit {name: String; color: String;};
-
-  interface daysHabits {dots: habit[]};
-
-  interface allDaysHabits {[id: string]: daysHabits};
-
+  // Setting up fake data for the sake of testing and demo.
+  // This array is used to render all the activity buttons in the ActivityList object.
   const read = {key: "Read", color: "lightcoral"};
   const exercise = {key:  "Exercise", color: "cornflowerblue"};
   const knitting = {key:  "Knitting", color: "lightgreen"};
+
+  const ActivityArr = [
+    read, exercise, knitting
+  ];
 
   const days = [
     {date: "2024-12-01", dots: [read, exercise, knitting]},
@@ -30,20 +30,14 @@ export default function Index() {
   ];
 
 
+  // This is the only way I could figure out how to get the dates in a format that the calendar package recognizes, while reading info in from an array.
+  // Taken from this stackoverflow page.
   //https://stackoverflow.com/questions/64044386/how-to-dynamically-populate-calendar-marked-dates-from-api-react-native-redux
   let mark = {};
 
   days.forEach((key) => {
     mark[key.date] = {dots: key.dots};
   })
-  
-  /*mark[d3.date] = {dots: d3.dots};
-  mark[d2.date] = {dots: d2.dots};
-  mark[d1.date] = {dots: d1.dots};*/
-
-  const ActivityArr = [
-    read, exercise, knitting
-  ];
 
   return (
 
@@ -73,31 +67,18 @@ export default function Index() {
           markedDates={ mark }
         />
 
-      <NavigationButton style={[styles.button, {backgroundColor: "skyblue"}]} name="Create New Activity" link="ActivityForm" color="#00d1cf"/>
+      <Link style={[styles.button, {backgroundColor: "skyblue"}]} href="ActivityForm" color="#00d1cf">Create New Activity</Link>
 
-      <NavigationButton style={[styles.button, {backgroundColor: "orchid"}]} name="Log Activity" link="ActivityForm" color="#c560ff"/> 
+      <Link style={[styles.button, {backgroundColor: "orchid"}]} href="Log Activity" link="ActivityForm" color="#c560ff">Log Activity</Link> 
 
+      <MenuProvider>
       <ActivityList ActivityArr={ActivityArr} buttonStyle={[styles.button]} headerStyle={{textAlign: "center", alignItems: "center", fontSize: 20, fontWeight: "bold"}}/>
-    </View>
-)}
-
-/*const Calendar = props => {
-  return (
-    
-    <View style={props.calendarStyle}>
-      {CalendarArr.map(day => (
-      <CalendarEntry style={props.entryStyle} key={day} day={day}/>))}
-    </View>
-)}*/
-
-const CalendarEntry = props => {
-  return (
-    <View style={props.style}>
-      <Text>{props.day}</Text>
+      </MenuProvider>
     </View>
 )}
 
 const NavigationButton = props => {
+
 return (
 <TouchableHighlight>
   <Link href={props.link} style={props.style}>{props.name}</Link>
@@ -120,7 +101,6 @@ const ActivityButton = props => {
   const buttonName = props.name
   const { ContextMenu } = renderers;
 return (
-  <MenuProvider>
   <View style={[props.style]}>
     <Link href={{pathname: props.link, params: {habitName: buttonName}}} style={{fontSize: 20, fontWeight: "bold"}}>
     {props.name}
@@ -135,7 +115,6 @@ return (
         </Menu>
     </View>
   </View>
-  </MenuProvider>
 )}
 
     const styles = StyleSheet.create({

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
+import { Text, View, FlatList, Image, StyleSheet, TouchableOpacity, ScrollView, ImageBase } from "react-native";
 import { useNavigation, useRouter, useLocalSearchParams } from "expo-router";
 import { Stack } from 'expo-router';
 import LineGraph from './lineGraph';
@@ -30,12 +30,13 @@ export default function activityPage() {
       
       <Text style={{fontSize: 20, fontWeight: 'bold',}}>Gallery:</Text>
 
-      <Image source={imageSource} style={styles.mainImage} />
+      <Image source={require("../assets/images/read01.jpg")} style={styles.mainImage}/>
+      
       <FlatList 
         horizontal={true}
         data={images}
         renderItem={({item}) => <TouchableOpacity onPress={() => onPress(item.filePath)} style={{margin: 15}}>
-                                  <Image source={item.filePath} style={styles.listImage}/>
+                                  <Image source={{uri: item.filePath}} style={styles.listImage}/>
                                 </TouchableOpacity>}
       />
 
@@ -56,28 +57,20 @@ export default function activityPage() {
   );
 }
 
-interface imageEntry {habit: string, filePath: string, date: string}
+interface entry {habit: string, filePath: string, date: string, note: string, hours: number}
 
 interface noteEntry {habit: string, note: string, date: string}
 
 interface analyticsEntry {habit: string, hoursDelta: number, days: number}
 
-const images: imageEntry[] = [
-  {habit: "Read", filePath: require("../assets/images/read01.jpg"), date: "11/5/24"},
-  {habit: "Read", filePath: require("../assets/images/read02.jpg"), date: "11/6/24"},
-  {habit: "Read", filePath: require("../assets/images/read03.jpg"), date: "11/7/24"},
-  {habit: "Read", filePath: require("../assets/images/read04.jpg"), date: "11/8/24"},
+const entries: entry[] = [
+  {habit: "Read", filePath: require("../assets/images/read01.jpg"), date: "11/5/24", note: "Cool sci-fi. Some of the \'science\' is a bit hard to believe but it's fun either way.", hours: 1},
+  {habit: "Read", filePath: require("../assets/images/read02.jpg"), date: "11/6/24", note: "I don't get philosophy. Maybe I need to read some of the old dialogues.", hours: 2},
+  {habit: "Read", filePath: require("../assets/images/read03.jpg"), date: "11/7/24", note: "Haven't read it yet but it sounds really interesting.", hours: 1},
+  {habit: "Read", filePath: require("../assets/images/read04.jpg"), date: "11/8/24", note: "Haven't read it yet but it sounds really interesting.", hours: 3},
 ];
 
-const notes: noteEntry[] = [
-  {habit: "Read", note: "Cool sci-fi. Some of the \'science\' is a bit hard to believe but it's fun either way.", date: " 11/5/24"},
-  {habit: "Read", note: "I don't get philosophy. Maybe I need to read some of the old dialogues.", date: " 11/6/24"},
-  {habit: "Read", note: "Haven't read it yet but it sounds really interesting.", date: " 11/7/24"},
-  {habit: "Read", note: "Haven't read it yet but it sounds really interesting.", date: " 11/8/24"},
-];
-
-const analytics: analyticsEntry = {habit: "Read", hoursDelta: 4, days: 8}
-;
+const analytics: analyticsEntry = {habit: "Read", hoursDelta: 4, days: 8};
 
 const styles = StyleSheet.create({
   mainImage: {height: 250, 
