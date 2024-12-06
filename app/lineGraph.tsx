@@ -1,3 +1,4 @@
+// Resources used for this page:
 // https://betterprogramming.pub/d3-and-react-native-an-essential-guide-to-line-graphs-dc1ce392b440
 //https://www.youtube.com/watch?v=5oYE61y4os4&t=181s
 
@@ -7,17 +8,8 @@
 
 import React, { useState } from 'react';
 import { View, Text } from 'react-native';
-import { Svg, Defs, LinearGradient, Path, Stop, Line, G, Circle, Rect } from 'react-native-svg';
+import { Svg, Path, Line, Rect } from 'react-native-svg';
 import * as d3 from 'd3';
-
-export type LineGraphProps = {
-    data: number[];
-    label: string;
-    stat: string;
-    color: string;
-};
-
-const GRAPH_ASPECT_RATIO = 9/16;
 
 export default function LineGraph(props: LineGraphProps) {
     const [width, setWidth] = useState(0);
@@ -27,7 +19,8 @@ export default function LineGraph(props: LineGraphProps) {
     const min = Math.min(...props.data);
     const max = Math.max(...props.data);
 
-    {/* https://www.freecodecamp.org/news/javascript-range-create-an-array-of-numbers-with-the-from-method/ */}
+    /* https://www.freecodecamp.org/news/javascript-range-create-an-array-of-numbers-with-the-from-method/ */
+    // These define the axes of the graph. Used Array.from so the range could be defined dynamically since the hours spent are likely to change.
     const domain = [{letter:"Mon", i: 0}, {letter:"Tue", i: 1}, {letter:"Wed", i: 2}, {letter:"Thur", i: 3}, {letter:"Fri", i: 4}, {letter:"Sat", i: 5}, {letter:"Sun", i: 6}];
     const range = Array.from({length: max+1}, (value, index) => index+1);
 

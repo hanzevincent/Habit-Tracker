@@ -1,12 +1,8 @@
 import { StyleSheet, Text, TouchableHighlight, View, FlatList, ScrollView, Button, } from "react-native";
 import { Link, router } from "expo-router";
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { MenuProvider } from 'react-native-popup-menu';
-import {  Menu,  MenuOptions,  MenuOption,  MenuTrigger, renderers} from 'react-native-popup-menu';
-import { useAnimatedScrollHandler, withDecay } from "react-native-reanimated";
-import {useEffect} from "react";
-import { SvgUri } from 'react-native-svg';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import {  Menu,  MenuOptions,  MenuOption,  MenuTrigger } from 'react-native-popup-menu';
+import {Calendar} from 'react-native-calendars';
 import DropdownSvg from '../assets/icons/dropdown.js';
 
 import { useLocalSearchParams } from "expo-router";
@@ -72,20 +68,14 @@ export default function Index() {
       <Link style={[styles.button, {backgroundColor: "orchid"}]} href="Log Activity" link="ActivityForm" color="#c560ff">Log Activity</Link> 
 
       <MenuProvider>
-      <ActivityList ActivityArr={ActivityArr} buttonStyle={[styles.button]} headerStyle={{textAlign: "center", alignItems: "center", fontSize: 20, fontWeight: "bold"}}/>
+      <ActivityList ActivityArr={ActivityArr} buttonStyle={[styles.button]} headerStyle={styles.headerStyle}/>
       </MenuProvider>
     </View>
 )}
 
-const NavigationButton = props => {
-
-return (
-<TouchableHighlight>
-  <Link href={props.link} style={props.style}>{props.name}</Link>
-</TouchableHighlight>
-
-)}
-
+// This is in a custom component because I got a bit overzealous. But it also makes the main view that gets returned look a bit more readable.
+// Habits are in a FlatList so if too many habits are established to be displayed on the screen the user can scroll down.
+// This isn't an issue with the demo data but it could become a problem in actual use.
 const ActivityList = props => {
   return (
     <View style={{
@@ -97,16 +87,16 @@ const ActivityList = props => {
     </View>
 )}
 
+// This is separated to make other components more readable. 
 const ActivityButton = props => {
   const buttonName = props.name
-  const { ContextMenu } = renderers;
 return (
   <View style={[props.style]}>
     <Link href={{pathname: props.link, params: {habitName: buttonName}}} style={{fontSize: 20, fontWeight: "bold"}}>
     {props.name}
     </Link>
     <View style={styles.popUpMenu}>
-            <Menu onSelect={value => alert(`Selected number: ${value}`)} renderer={ContextMenu}>
+            <Menu onSelect={value => alert(`Not yet implemented!`)}>
           <MenuTrigger><DropdownSvg style={{width: 25, height: 25}}/></MenuTrigger>
           <MenuOptions customStyles={{optionText: styles.optionStyles}}>
             <MenuOption value={1} text='Archive' />
@@ -135,32 +125,6 @@ return (
         fontWeight: "bold",
         borderWidth:  3,
       },
-    
-      headerBar: {
-        flexDirection: 'row',
-        margin: 5,
-      },
-    
-      headerButton: {
-        textAlign: "center",
-        margin: 5,
-        padding: 5,
-        borderRadius: 5,
-        height: 30,
-      },
-
-      homeButton: {
-        textAlign: "center",
-        margin: 5,
-        padding: 5,
-        borderRadius: 5,
-        height: 30,
-      },
-    
-      listHeader: {
-        width: 'auto',
-        textAlign: 'center',
-      },
 
       popUpMenu: {
         flex: 3, 
@@ -169,11 +133,9 @@ return (
         alignItems: "center"
       },
 
-      calendarStyle: {
-        backgroundColor: 'black',
-      }
+      headerStyle: {
+        textAlign: "center", 
+        alignItems: "center", 
+        fontSize: 20, 
+        fontWeight: "bold"}
     });
-
-    function buttonNav(href): void {
-      router.push(href);
-    }
