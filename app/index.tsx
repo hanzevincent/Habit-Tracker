@@ -57,13 +57,15 @@ export default function Index() {
                 textMonthFontSize: 25,
                 textDayHeaderFontSize: 15,
           }}
+
+          markingType={'multi-dot'}
+          markedDates={mark}
       />
       <>
-      <Link style={[styles.button, {backgroundColor: "orchid"}]} href="logActivityForm">Log Activity</Link>
 
       <Link style={[styles.button, {backgroundColor: "skyblue"}]} href="ActivityForm" color="#00d1cf">Create New Activity</Link>
 
-      {/* <Link style={[styles.button, {backgroundColor: "orchid"}]} href="Log Activity" link="ActivityForm" color="#c560ff">Log Activity</Link>  */}
+      <Link style={[styles.button, {backgroundColor: "orchid"}]} href="logActivityForm">Log Activity</Link>
 
       <MenuProvider>
       <ActivityList ActivityArr={ActivityArr} buttonStyle={[styles.button]} headerStyle={styles.headerStyle}/>

@@ -62,16 +62,6 @@ export default function App() {
                 render={({ field: { value, onChange, onBlur }, fieldState: { error } }) => (
                   <TextInputError error={error} onBlur={onBlur} value={value} onChange={onChange}/>
 
-                  /*<>
-                    <TextInput
-                    style={[styles.inputActual, {flex: 2}]}
-                      value={value}
-                      onChangeText={onChange}
-                      onBlur={onBlur}
-                      placeholder="knitting"
-                    />
-                    {error && <Text style={styles.errorText}>{error.message}</Text>}
-                  </>*/
                 )}
               />
 
