@@ -3,30 +3,30 @@
 Our project aims to assist individuals, who are entering a college environment, to develop good habits. With such a big shift, individuals may struggle to find new methods or maintain old strategies for establishing habits in the new setting. We believe addressing this issue is important as facilitating the development of habits will aid individuals with the major life transition into college life, cultivating a sense of independence and responsibility.
 ### Importance:
 The transition into a college environment can be a stressful and overwhelming time for many people, and as such, developing good habits can hold many benefits and can improve a student’s university experience. For example, a study from 2013 showed that in cases where people are unable to exert self control, such as when they are tired or stressed, they often revert to habitual behavior (Neal et al., 2013). This can be good or bad, and we hope to encourage students to develop good habitual behaviors as a college environment can often be tiring and stressful, so having established behaviors should help students manage the workload. There are also other long term benefits. Training habit formation has been shown to improve self control (de Ridder et at., 2019), and adoption of positive habits is associated with longer life and lower risk of chronic diseases (Pereira M.V.G., 2024).
-	Novelty:
+### Novelty:
 Our app aims to give users a more detailed method of tracking their progress than other systems by encouraging them to write notes or attach images to an instance of completing a habit. We hope that this increased amount of detail and record keeping will motivate users by giving a detailed view of how much they have improved over time. Planned features and decisions to forgo features of similar habit tracking apps were made to mitigate pressure on users for a stress-free experience, distinguishing our app from others that incorporate things such as to-do list-esque elements in their design for accountability. Social features such as adding friends and sharing analytics were also purposefully avoided to decrease competitiveness and stress.
-Implementation Details:
-Framework, Platform, and Language:	
+## Implementation Details:
+### Framework, Platform, and Language:	
 We used the React Native framework and Expo platform for mobile development. We chose these tools because they both are commonly used for app development, integrate well together, and have easily accessible documentation. React Native uses concepts that we were familiar with to make apps for several ecosystems (IOS and Android) concurrently without having to write different code. React pages are structured similarly to HTML, and use Typescript, this allowed us to start developing fairly quickly in spite of not having experience with these tools. The Expo platform also comes with a system for running the app on an emulator or directly on a phone, which allows us to see our changes and test our app quickly. It also streamlines the package installation process and comes with some packages that are very useful. Github was used for version control and so we could keep our work backed up and up to date with each other. We were all already familiar with Github’s version control which made it an easy choice.
 To organize our implementation we first created a list of all the features that we wanted to include and a priority ranking on each feature. This guided our implementation as we were unable to implement everything on our limited time frame.
  
-Libraries:
-	D3 and react-native-svg:
+### Libraries:
+#### D3 and react-native-svg:
 These libraries were used to visualize the amount of time a user has spent on a habit. D3 can automatically generate a line that matches an array of data, and svg can draw shapes to construct the rest of the graph easily. This saved a lot of time compared to building something from the ground up.
-		react-native-calendars:
+#### react-native-calendars:
 This library generates a calendar which can display marks on different days  to show when habits were completed. It provides more calendar functionality than we would be able to implement in a reasonable amount of time.
-expo-router:
+#### expo-router:
 This is a built in navigator for the expo framework, it automatically provides a consistent header to each page, and gives us more ways to navigate between pages.
-react-hook-form:
+#### react-hook-form:
 	This react library allows for user inputs to be managed by controllers and a submit handler function. It allows all form fields to be submitted at the same time via one submit handler.
-		expo-image-picker:
+#### expo-image-picker:
 This expo library allows for simplified media access, it provides a way to easily select an image from files and access that image within the application. The image uri value is passed to the return object which can be used to view the image.
-	Assets:
-		Ionicons:
+### Assets:
+#### Ionicons:
 Provides generic symbols in an svg format that can be used for buttons. It’s faster to get good looking icons from this library than making them in-house.
-SVGR Playground:
+#### SVGR Playground:
 	Converts Svg code from Ionicons to a React Native compatible component to streamline the process of getting the icons to display in the app. Doing this manually would be tedious and have no visible difference for the user. It would also likely make the code harder to read.
-	Features:
+### Features:
 		Home:
 		Calendar:
 Displays what days habits were completed on. An instance of a habit is represented by a small colored dot underneath a day, the color of the dots correspond to the color of a habit as shown in the Activity List. These dots are generated dynamically from an array.
